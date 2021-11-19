@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GS.Auth0 {
-    
-    
-    public partial class LogIn {
-        
+namespace GS.Auth0
+{
+
+
+    public partial class LogIn
+    {
+
         /// <summary>
         /// loginItem control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GS.Auth0 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl loginItem;
-        
+
         /// <summary>
         /// loginButton control.
         /// </summary>

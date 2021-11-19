@@ -37,9 +37,16 @@ namespace GS.Auth0
 {
     public partial class LogIn : OAuthLoginBase
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog logger = LoggerSource.Instance.GetLogger(typeof(LogIn));
 
-        #region Properties
+        #region Properties        
+        /// <summary>
+        /// Gets the name of the authentication system application.
+        /// </summary>
+        /// <value>The name of the authentication system application.</value>
         protected override string AuthSystemApplicationName
         {
             get { return Constants.PROVIDER_NAME; }
@@ -85,8 +92,11 @@ namespace GS.Auth0
         }
         #endregion
 
-        #region Event Handlers
-
+        #region Event Handlers        
+        /// <summary>
+        /// Handles the <see cref="E:Init" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             this.ModuleConfiguration.ModuleControl.SupportsPartialRendering = false;
@@ -106,6 +116,10 @@ namespace GS.Auth0
             OAuthClient = new Auth0Client(PortalId, Mode);
         }
 
+        /// <summary>
+        /// Handles the <see cref="E:Load" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -139,6 +153,11 @@ namespace GS.Auth0
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the loginButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void loginButton_Click(object sender, EventArgs e)
         {
             try
@@ -162,7 +181,11 @@ namespace GS.Auth0
 
         #endregion
 
-        #region "Private methods"
+        #region "Private methods"        
+        /// <summary>
+        /// Gets the current user.
+        /// </summary>
+        /// <returns>UserData.</returns>
         protected override UserData GetCurrentUser()
         {
             return OAuthClient.GetCurrentUser<Auth0UserData>();

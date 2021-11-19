@@ -7,6 +7,11 @@ using System.Web;
 
 namespace GS.Auth0.Components
 {
+    /// <summary>
+    /// Class Auth0UserData.
+    /// Implements the <see cref="DotNetNuke.Services.Authentication.OAuth.UserData" />
+    /// </summary>
+    /// <seealso cref="DotNetNuke.Services.Authentication.OAuth.UserData" />
     [DataContract]
     public class Auth0UserData : UserData
     {

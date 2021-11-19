@@ -18,6 +18,11 @@ namespace GS.Auth0.Components
     public class Auth0ConfigBase : AuthenticationConfigBase
     {
         #region "Constructors"        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Auth0ConfigBase"/> class.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="portalId">The portal identifier.</param>
         protected Auth0ConfigBase(string service, int portalId)
             : base(portalId)
         {
@@ -33,7 +38,11 @@ namespace GS.Auth0.Components
         }
         #endregion
 
-        #region "Private properties"
+        #region "Private properties"        
+        /// <summary>
+        /// Gets or sets the service.
+        /// </summary>
+        /// <value>The service.</value>
         private string Service { get; set; }
         #endregion
 
@@ -44,19 +53,39 @@ namespace GS.Auth0.Components
         [DotNetNuke.UI.WebControls.SortOrder(0)]
         public bool IsEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets the domain.
+        /// </summary>
+        /// <value>The domain.</value>
         [DotNetNuke.UI.WebControls.SortOrder(1)]
         public string Domain { get; set; }
 
+        /// <summary>
+        /// Gets or sets the client identifier.
+        /// </summary>
+        /// <value>The client identifier.</value>
         [DotNetNuke.UI.WebControls.SortOrder(2)]
         public string ClientID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the client secret.
+        /// </summary>
+        /// <value>The client secret.</value>
         [DotNetNuke.UI.WebControls.SortOrder(3)]
         public string ClientSecret { get; set; }
 
+        /// <summary>
+        /// Gets or sets the redirect URI.
+        /// </summary>
+        /// <value>The redirect URI.</value>
         [DotNetNuke.UI.WebControls.IsReadOnly(false)]
         [DotNetNuke.UI.WebControls.SortOrder(4)]
         public string RedirectUri { get; set; }
 
+        /// <summary>
+        /// Gets or sets the post logout redirect URI.
+        /// </summary>
+        /// <value>The post logout redirect URI.</value>
         [DotNetNuke.UI.WebControls.IsReadOnly(false)]
         [DotNetNuke.UI.WebControls.SortOrder(5)]
         public string PostLogoutRedirectUri { get; set; }
@@ -88,7 +117,12 @@ namespace GS.Auth0.Components
 
         #endregion
 
-        #region "Public methods"
+        #region "Public methods"        
+        /// <summary>
+        /// Clears the configuration.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="portalId">The portal identifier.</param>
         public static void ClearConfig(string service, int portalId)
         {
             DataCache.RemoveCache(GetCacheKey(service, portalId));
@@ -113,6 +147,10 @@ namespace GS.Auth0.Components
             return config;
         }
 
+        /// <summary>
+        /// Updates the configuration.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
         public static void UpdateConfig(Auth0ConfigBase config)
         {
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_Domain", config.Domain);
@@ -127,11 +165,17 @@ namespace GS.Auth0.Components
         }
         #endregion
 
-        #region "Private Methods"
+        #region "Private Methods"        
+        /// <summary>
+        /// Gets the cache key.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="portalId">The portal identifier.</param>
+        /// <returns>System.String.</returns>
         private static string GetCacheKey(string service, int portalId)
         {
-            const string _cacheKey = "Authentication";
-            return _cacheKey + "." + service + "_" + portalId;
+            const string cacheKey = "Authentication";
+            return cacheKey + "." + service + "_" + portalId;
         }
         #endregion
 

@@ -21,15 +21,30 @@ using GS.Auth0.Components;
 
 namespace GS.Auth0
 {
+    /// <summary>
+    /// Class Settings.
+    /// Implements the <see cref="DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
+    /// </summary>
+    /// <seealso cref="DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
     public partial class Settings : AuthenticationSettingsBase
     {
+        /// <summary>
+        /// The settings editor
+        /// </summary>
         protected PropertyEditorControl SettingsEditor;
 
+        /// <summary>
+        /// Gets the name of the authentication system application.
+        /// </summary>
+        /// <value>The name of the authentication system application.</value>
         protected string AuthSystemApplicationName
         {
             get { return Constants.PROVIDER_NAME; }
         }
 
+        /// <summary>
+        /// Updates the settings.
+        /// </summary>
         public override void UpdateSettings()
         {
             if (SettingsEditor.IsValid && SettingsEditor.IsDirty)
@@ -38,7 +53,11 @@ namespace GS.Auth0
                 Auth0ConfigBase.UpdateConfig(config);
             }
         }
-       
+
+        /// <summary>
+        /// Handles the <see cref="E:Load" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);

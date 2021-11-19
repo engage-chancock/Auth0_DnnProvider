@@ -4,25 +4,114 @@
         <name>GS.Auth0</name>
     </assembly>
     <members>
+        <member name="T:GS.Auth0.Components.Auth0AuthMessageHandler">
+            <summary>
+            Class Auth0AuthMessageHandler.
+            Implements the <see cref="T:DotNetNuke.Web.Api.Auth.AuthMessageHandlerBase" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Web.Api.Auth.AuthMessageHandlerBase" />
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0AuthMessageHandler.AuthScheme">
+            <summary>
+            Gets the authentication scheme.
+            </summary>
+            <value>The authentication scheme.</value>
+        </member>
+        <member name="M:GS.Auth0.Components.Auth0AuthMessageHandler.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GS.Auth0.Components.Auth0AuthMessageHandler"/> class.
+            </summary>
+            <param name="includeByDefault">if set to <c>true</c> [include by default].</param>
+            <param name="forceSsl">if set to <c>true</c> [force SSL].</param>
+        </member>
+        <member name="T:GS.Auth0.Components.Auth0Client">
+            <summary>
+            Class Auth0Client.
+            Implements the <see cref="T:DotNetNuke.Services.Authentication.OAuth.OAuthClientBase" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Services.Authentication.OAuth.OAuthClientBase" />
+        </member>
+        <member name="M:GS.Auth0.Components.Auth0Client.#ctor(System.Int32,DotNetNuke.Services.Authentication.AuthMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GS.Auth0.Components.Auth0Client"/> class.
+            </summary>
+            <param name="portalId">The portal identifier.</param>
+            <param name="mode">The mode.</param>
+        </member>
         <member name="T:GS.Auth0.Components.Auth0ConfigBase">
             <summary>
             The Config class provides a central area for management of Module Configuration Settings.
             </summary>
+        </member>
+        <member name="M:GS.Auth0.Components.Auth0ConfigBase.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GS.Auth0.Components.Auth0ConfigBase"/> class.
+            </summary>
+            <param name="service">The service.</param>
+            <param name="portalId">The portal identifier.</param>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.Service">
+            <summary>
+            Gets or sets the service.
+            </summary>
+            <value>The service.</value>
         </member>
         <member name="P:GS.Auth0.Components.Auth0ConfigBase.IsEnabled">
             <summary>
             Flag that determines whether provider is enabled or disabled.
             </summary>
         </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.Domain">
+            <summary>
+            Gets or sets the domain.
+            </summary>
+            <value>The domain.</value>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.ClientID">
+            <summary>
+            Gets or sets the client identifier.
+            </summary>
+            <value>The client identifier.</value>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.ClientSecret">
+            <summary>
+            Gets or sets the client secret.
+            </summary>
+            <value>The client secret.</value>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.RedirectUri">
+            <summary>
+            Gets or sets the redirect URI.
+            </summary>
+            <value>The redirect URI.</value>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.PostLogoutRedirectUri">
+            <summary>
+            Gets or sets the post logout redirect URI.
+            </summary>
+            <value>The post logout redirect URI.</value>
+        </member>
         <member name="P:GS.Auth0.Components.Auth0ConfigBase.IsDiagnosticModeEnabled">
             <summary>
             Flag that determines if diagnostic info should be saved in DNN log file
+            </summary>
+        </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.SkipLoginPage">
+            <summary>
+            Skips login page and instead logs in immediately
             </summary>
         </member>
         <member name="P:GS.Auth0.Components.Auth0ConfigBase.AreProviderSettingsCorrect">
             <summary>
             Check if provider has defined all coordinates that are necessary to initialize login flow.
             </summary>
+        </member>
+        <member name="M:GS.Auth0.Components.Auth0ConfigBase.ClearConfig(System.String,System.Int32)">
+            <summary>
+            Clears the configuration.
+            </summary>
+            <param name="service">The service.</param>
+            <param name="portalId">The portal identifier.</param>
         </member>
         <member name="M:GS.Auth0.Components.Auth0ConfigBase.GetConfig(System.String,System.Int32)">
             <summary>
@@ -32,9 +121,108 @@
             <param name="portalId"></param>
             <returns></returns>
         </member>
+        <member name="M:GS.Auth0.Components.Auth0ConfigBase.UpdateConfig(GS.Auth0.Components.Auth0ConfigBase)">
+            <summary>
+            Updates the configuration.
+            </summary>
+            <param name="config">The configuration.</param>
+        </member>
+        <member name="M:GS.Auth0.Components.Auth0ConfigBase.GetCacheKey(System.String,System.Int32)">
+            <summary>
+            Gets the cache key.
+            </summary>
+            <param name="service">The service.</param>
+            <param name="portalId">The portal identifier.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="T:GS.Auth0.Components.Auth0LoginBase">
+            <summary>
+            Class Auth0LoginBase.
+            Implements the <see cref="T:DotNetNuke.Services.Authentication.AuthenticationLoginBase" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Services.Authentication.AuthenticationLoginBase" />
+        </member>
+        <member name="T:GS.Auth0.Components.Auth0UserData">
+            <summary>
+            Class Auth0UserData.
+            Implements the <see cref="T:DotNetNuke.Services.Authentication.OAuth.UserData" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Services.Authentication.OAuth.UserData" />
+        </member>
+        <member name="T:GS.Auth0.Components.Constants">
+            <summary>
+            Class Constants.
+            </summary>
+        </member>
+        <member name="F:GS.Auth0.Components.Constants.PROVIDER_NAME">
+            <summary>
+            Unique name that was assigned to this Auth0 provider
+            </summary>
+        </member>
+        <member name="F:GS.Auth0.Components.Constants.OIDC_RETURN_URL">
+            <summary>
+            The oidc return URL
+            </summary>
+        </member>
+        <member name="F:GS.Auth0.Components.Constants.AUTH_TYPE">
+            <summary>
+            The authentication type
+            </summary>
+        </member>
+        <member name="F:GS.Auth0.Components.Constants.AUTH_COOKIE_NAME">
+            <summary>
+            Name of the authentication cookie where authentication ticket will persist
+            </summary>
+        </member>
+        <member name="F:GS.Auth0.Components.Constants.ALERT_QUERY_STRING">
+            <summary>
+            Name of the query string key that contains error message
+            </summary>
+        </member>
+        <member name="T:GS.Auth0.Components.DnnUserExporter">
+            <summary>
+            Class DnnUserExporter.
+            </summary>
+        </member>
+        <member name="M:GS.Auth0.Components.DnnUserExporter.ExportUsers(System.Int32,System.String)">
+            <summary>
+            Exports users from DNN to Auth0
+            </summary>
+            <param name="portalId"></param>
+            <param name="authToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GS.Auth0.Components.DnnUserExporter.CreateAuth0User(System.Net.Http.HttpClient,System.String,System.String,DotNetNuke.Entities.Users.UserInfo)">
+            <summary>
+            Creates an Auth0 user
+            </summary>
+            <param name="client"></param>
+            <param name="baseUrl"></param>
+            <param name="authToken"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GS.Auth0.Components.DnnUserExporter.GetStatusString(System.Int32,System.Int32)">
+            <summary>
+            Gets the status string.
+            </summary>
+            <param name="successCount">The success count.</param>
+            <param name="userCount">The user count.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="T:GS.Auth0.Components.Helpers">
+            <summary>
+            Class Helpers.
+            </summary>
+        </member>
         <member name="P:GS.Auth0.Components.Helpers.FirstPortalID">
             <summary>
             Find the smallest portalID in the DNN instance
+            </summary>
+        </member>
+        <member name="T:GS.Auth0.Components.UserController">
+            <summary>
+            Class UserController.
             </summary>
         </member>
         <member name="M:GS.Auth0.Components.UserController.User_Create(System.String,DotNetNuke.Entities.Portals.PortalSettings,System.Boolean)">
@@ -57,20 +245,16 @@
             <param name="isDiagnosticModeEnabled">Enable that flag to create logs with info about what this method do.</param>
             <returns></returns>
         </member>
-        <member name="F:GS.Auth0.Constants.PROVIDER_NAME">
+        <member name="F:GS.Auth0.LogIn.logger">
             <summary>
-            Unique name that was assigned to this Auth0 provider
+            The logger
             </summary>
         </member>
-        <member name="F:GS.Auth0.Constants.AUTH_COOKIE_NAME">
+        <member name="P:GS.Auth0.LogIn.AuthSystemApplicationName">
             <summary>
-            Name of the authentication cookie where authentication ticket will persist
+            Gets the name of the authentication system application.
             </summary>
-        </member>
-        <member name="F:GS.Auth0.Constants.ALERT_QUERY_STRING">
-            <summary>
-            Name of the query string key that contains error message
-            </summary>
+            <value>The name of the authentication system application.</value>
         </member>
         <member name="P:GS.Auth0.LogIn.Enabled">
             <summary>
@@ -86,6 +270,36 @@
             <summary>
             Check if OWIN pipeline is enabled in DNN web.config file
             </summary>
+        </member>
+        <member name="M:GS.Auth0.LogIn.OnInit(System.EventArgs)">
+            <summary>
+            Handles the <see cref="E:Init" /> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:GS.Auth0.LogIn.OnLoad(System.EventArgs)">
+            <summary>
+            Handles the <see cref="E:Load" /> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:GS.Auth0.LogIn.loginButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Click event of the loginButton control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:GS.Auth0.LogIn.Login">
+            <summary>
+            Logins this user.
+            </summary>
+        </member>
+        <member name="M:GS.Auth0.LogIn.GetCurrentUser">
+            <summary>
+            Gets the current user.
+            </summary>
+            <returns>UserData.</returns>
         </member>
         <member name="F:GS.Auth0.LogIn.loginItem">
             <summary>
@@ -105,12 +319,109 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
+        <member name="T:GS.Auth0.LogOff">
+            <summary>
+            Class LogOff.
+            Implements the <see cref="T:DotNetNuke.Services.Authentication.AuthenticationLogoffBase" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Services.Authentication.AuthenticationLogoffBase" />
+        </member>
+        <member name="F:GS.Auth0.LogOff.logger">
+            <summary>
+            The logger
+            </summary>
+        </member>
+        <member name="M:GS.Auth0.LogOff.OnInit(System.EventArgs)">
+            <summary>
+            Handles the <see cref="E:Init" /> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
         <member name="M:GS.Auth0.LogOff.Page_Load(System.Object,System.EventArgs)">
             -----------------------------------------------------------------------------
             <summary>
             Page_Load runs when the control is loaded
             </summary>
             -----------------------------------------------------------------------------
+        </member>
+        <member name="T:GS.Auth0.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:GS.Auth0.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:GS.Auth0.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:GS.Auth0.Settings">
+            <summary>
+            Class Settings.
+            Implements the <see cref="T:DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
+            </summary>
+            <seealso cref="T:DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
+        </member>
+        <member name="F:GS.Auth0.Settings.exportUsersToken">
+            <summary>
+            exportUsersToken control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:GS.Auth0.Settings.exportUsersButton">
+            <summary>
+            exportUsersButton control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:GS.Auth0.Settings.exportUsersResult">
+            <summary>
+            exportUsersResult control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:GS.Auth0.Settings.SettingsEditor">
+            <summary>
+            The settings editor
+            </summary>
+        </member>
+        <member name="P:GS.Auth0.Settings.AuthSystemApplicationName">
+            <summary>
+            Gets the name of the authentication system application.
+            </summary>
+            <value>The name of the authentication system application.</value>
+        </member>
+        <member name="M:GS.Auth0.Settings.UpdateSettings">
+            <summary>
+            Updates the settings.
+            </summary>
+        </member>
+        <member name="M:GS.Auth0.Settings.OnLoad(System.EventArgs)">
+            <summary>
+            Handles the <see cref="E:Load" /> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:GS.Auth0.Settings.exportUsersButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Click event of the exportUsersButton control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
     </members>
 </doc>

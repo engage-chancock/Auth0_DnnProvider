@@ -4,7 +4,7 @@
 		<h4>Requirements</h4>
 		<ul>
 		<li>DotNetNuke v8.0.1 or above</li>
-		<li>.NET Framework v4.5.1 or above</li>
+		<li>.NET Framework v4.7.2 or above</li>
 		</ul>
 
 		<p>Azure AD Connector uses OWIN pipeline. Please make sure that you backed up the DNN file system and DNN database.</p>

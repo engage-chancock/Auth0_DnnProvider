@@ -5,6 +5,9 @@ using System.Web;
 
 namespace GS.Auth0.Components
 {
+    /// <summary>
+    /// Class Helpers.
+    /// </summary>
     public class Helpers
     {
         /// <summary>

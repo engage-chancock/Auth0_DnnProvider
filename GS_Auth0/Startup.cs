@@ -16,7 +16,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
-[assembly: Microsoft.Owin.OwinStartupAttribute(GS.Auth0.Constants.PROVIDER_NAME, typeof(GS.Auth0.Startup))]
+[assembly: Microsoft.Owin.OwinStartupAttribute(GS.Auth0.Components.Constants.PROVIDER_NAME, typeof(GS.Auth0.Startup))]
 
 namespace GS.Auth0
 {

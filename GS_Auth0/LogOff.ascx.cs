@@ -26,13 +26,23 @@ namespace GS.Auth0
     #region Properties
 
     #endregion
-
+    /// <summary>
+    /// Class LogOff.
+    /// Implements the <see cref="DotNetNuke.Services.Authentication.AuthenticationLogoffBase" />
+    /// </summary>
+    /// <seealso cref="DotNetNuke.Services.Authentication.AuthenticationLogoffBase" />
     public partial class LogOff : DotNetNuke.Services.Authentication.AuthenticationLogoffBase
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog logger = LoggerSource.Instance.GetLogger(typeof(LogOff));
 
-        #region Event Handlers
-
+        #region Event Handlers        
+        /// <summary>
+        /// Handles the <see cref="E:Init" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         override protected void OnInit(EventArgs e)
         {
             this.Load += new System.EventHandler(this.Page_Load);
@@ -74,7 +84,7 @@ namespace GS.Auth0
                     // Send an OpenID Connect sign-out request.
                     ctx.Authentication.SignOut(
                         new Microsoft.Owin.Security.AuthenticationProperties { RedirectUri = Request.UrlReferrer.AbsoluteUri },
-                        Constants.AUTH_TYPE);
+                        GS.Auth0.Components.Constants.AUTH_TYPE);
                 }
             }
             catch (Exception ex) //Module failed to load

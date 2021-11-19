@@ -8,6 +8,9 @@ using System.Web;
 
 namespace GS.Auth0.Components
 {
+    /// <summary>
+    /// Class UserController.
+    /// </summary>
     public class UserController
     {
         private static readonly ILog logger = LoggerSource.Instance.GetLogger(typeof(UserController));
