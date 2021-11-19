@@ -173,8 +173,12 @@ namespace GS.Auth0
 
                             GS.Auth0.Components.UserController userController = new GS.Auth0.Components.UserController();
 
+                            //get username assuming username was sent. If not, default to user id from auth0
+                            var username = context.AuthenticationTicket.Identity?
+                                .FindFirst(c => c.Type == "preferred_username")?.Value ?? context.AuthenticationTicket.Identity.Name;
+                            
                             //get or create DNN user
-                            DotNetNuke.Entities.Users.UserInfo _userInfo = userController.User_Create(context.AuthenticationTicket.Identity.Name, _portalSettings, _providerConfig.IsDiagnosticModeEnabled);
+                            DotNetNuke.Entities.Users.UserInfo _userInfo = userController.User_Create(username, _portalSettings, _providerConfig.IsDiagnosticModeEnabled);
 
                             if (_userInfo != null)
                             {
