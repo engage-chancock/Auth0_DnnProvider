@@ -7,9 +7,38 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GS.Auth0 {
-    
-    
-    public partial class Settings {
+namespace GS.Auth0
+{
+
+
+    public partial class Settings
+    {
+
+        /// <summary>
+        /// exportUsersToken control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox exportUsersToken;
+
+        /// <summary>
+        /// exportUsersButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button exportUsersButton;
+
+        /// <summary>
+        /// exportUsersResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label exportUsersResult;
     }
 }

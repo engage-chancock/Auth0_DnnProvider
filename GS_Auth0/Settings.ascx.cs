@@ -18,6 +18,8 @@ using DotNetNuke.Common.Utilities;
 using DotNetNuke.Services.Authentication.OAuth;
 using DotNetNuke.UI.WebControls;
 using GS.Auth0.Components;
+using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace GS.Auth0
 {
@@ -64,6 +66,24 @@ namespace GS.Auth0
             Auth0ConfigBase config = Auth0ConfigBase.GetConfig(AuthSystemApplicationName, PortalId);
             SettingsEditor.DataSource = config;
             SettingsEditor.DataBind();
+        }
+
+        /// <summary>
+        /// Handles the Click event of the exportUsersButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void exportUsersButton_Click(object sender, EventArgs e)
+        {
+            if (exportUsersToken.Text.Length == 0)
+            {
+                exportUsersResult.Text = "Invalid token";
+                return;
+            }
+
+            var exporter = new DnnUserExporter();
+            var resultString = exporter.ExportUsers(PortalId, exportUsersToken.Text);
+            exportUsersResult.Text = resultString;
         }
     }
 

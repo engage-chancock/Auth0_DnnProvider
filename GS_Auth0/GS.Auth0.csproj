@@ -225,6 +225,7 @@
     </Compile>
     <Compile Include="Components\Auth0UserData.cs" />
     <Compile Include="Components\Constants.cs" />
+    <Compile Include="Components\DnnUserExporter.cs" />
     <Compile Include="Components\Helpers.cs" />
     <Compile Include="Components\UserController.cs" />
     <Compile Include="LogIn.ascx.cs">
