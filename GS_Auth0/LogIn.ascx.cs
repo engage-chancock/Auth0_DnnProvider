@@ -151,6 +151,13 @@ namespace GS.Auth0
                     DotNetNuke.UI.Skins.Skin.AddModuleMessage(this, "Enable OWIN in web.config file to utilize Auth0 provider!", DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.YellowWarning);
                 }
             }
+
+            Auth0ConfigBase _providerConfig = Auth0ConfigBase.GetConfig(Constants.PROVIDER_NAME, PortalId);
+            if (_providerConfig.AreProviderSettingsCorrect && _providerConfig.SkipLoginPage && _providerConfig.IsEnabled)
+            {
+                Login();
+            }
+            
         }
 
         /// <summary>
@@ -159,6 +166,17 @@ namespace GS.Auth0
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void loginButton_Click(object sender, EventArgs e)
+        {
+            if (Enabled)
+            {
+                Login();
+            }
+        }
+
+        /// <summary>
+        /// Logins this user.
+        /// </summary>
+        protected void Login()
         {
             try
             {

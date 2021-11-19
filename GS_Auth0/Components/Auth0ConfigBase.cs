@@ -35,6 +35,7 @@ namespace GS.Auth0.Components
             PostLogoutRedirectUri = PortalController.GetPortalSetting(Service + "_PostLogoutRedirectUri", portalId, "");
             IsEnabled = PortalController.GetPortalSettingAsBoolean(Service + "_Enabled", portalId, false);
             IsDiagnosticModeEnabled = PortalController.GetPortalSettingAsBoolean(Service + "_IsDiagnosticModeEnabled", portalId, true);
+            SkipLoginPage = PortalController.GetPortalSettingAsBoolean(Service + "_SkipLoginPage", portalId, false);
         }
         #endregion
 
@@ -96,6 +97,11 @@ namespace GS.Auth0.Components
         [DotNetNuke.UI.WebControls.SortOrder(6)]
         public bool IsDiagnosticModeEnabled { get; set; }
 
+        /// <summary>
+        /// Skips login page and instead logs in immediately
+        /// </summary>
+        [DotNetNuke.UI.WebControls.SortOrder(7)]
+        public bool SkipLoginPage { get; set; }
 
         /// <summary>
         /// Check if provider has defined all coordinates that are necessary to initialize login flow.
@@ -160,6 +166,8 @@ namespace GS.Auth0.Components
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_PostLogoutRedirectUri", config.PostLogoutRedirectUri);
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_Enabled", config.IsEnabled.ToString(CultureInfo.InvariantCulture));
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_IsDiagnosticModeEnabled", config.IsDiagnosticModeEnabled.ToString(CultureInfo.InvariantCulture));
+            PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_SkipLoginPage", config.SkipLoginPage.ToString(CultureInfo.InvariantCulture));
+
 
             ClearConfig(config.Service, config.PortalID);
         }

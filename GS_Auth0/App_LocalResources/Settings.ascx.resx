@@ -162,6 +162,12 @@
   <data name="Auth0ConfigBase_RedirectUri.Text" xml:space="preserve">
     <value>Login URL</value>
   </data>
+  <data name="Auth0ConfigBase_SkipLoginPage.Help" xml:space="preserve">
+    <value>When the login button is pressed, the site will bypass going to the DNN login page and instead will attempt a login directly.</value>
+  </data>
+  <data name="Auth0ConfigBase_SkipLoginPage.Text" xml:space="preserve">
+    <value>Bypass DNN Login Page</value>
+  </data>
   <data name="AuthProviderHelp.Text" xml:space="preserve">
     <value>Auth0 Connector help mesage</value>
   </data>
