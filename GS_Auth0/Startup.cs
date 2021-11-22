@@ -185,8 +185,10 @@ namespace GS.Auth0
                                 //update DNN user profile
                                 userController.User_Update(
                                 _userInfo,
+                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.GivenName)?.Value,
+                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value,
                                 context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == "nickname")?.Value,
-                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value,
+                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
                                 _portalSettings.PortalId,
                                 _providerConfig.IsDiagnosticModeEnabled);
 

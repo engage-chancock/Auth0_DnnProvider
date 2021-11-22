@@ -60,21 +60,23 @@ namespace GS.Auth0.Components
         /// <summary>
         /// Update the DNN user profile
         /// </summary>
-        /// <param name="dnnUser"></param> 
+        /// <param name="dnnUser"></param>
+        /// /// <param name="firstName"></param>
+        /// /// <param name="lastName"></param>
         /// <param name="displayName"></param>
         /// <param name="emailAddress"></param>
         /// <param name="portalID"></param>
         /// <param name="isDiagnosticModeEnabled">Enable that flag to create logs with info about what this method do.</param>
         /// <returns></returns>
-        public UserInfo User_Update(UserInfo dnnUser, string displayName, string emailAddress, int portalID, bool isDiagnosticModeEnabled)
+        public UserInfo User_Update(UserInfo dnnUser, string firstName, string lastName, string displayName, string emailAddress, int portalID, bool isDiagnosticModeEnabled)
         {
             if (dnnUser != null)
             {
                 if (isDiagnosticModeEnabled)
                     logger.Debug(string.Format("Updating profile for user '{0}'", dnnUser.Username));
 
-                //dnnUser.FirstName = "xxx";    //for future use
-                //dnnUser.LastName = "xxx";     //for future use
+                dnnUser.FirstName = firstName;
+                dnnUser.LastName = lastName;
                 dnnUser.DisplayName = displayName;
                 dnnUser.IsDeleted = false;
                 dnnUser.Membership.IsDeleted = false;

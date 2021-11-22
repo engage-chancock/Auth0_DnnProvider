@@ -172,7 +172,9 @@ namespace GS.Auth0
                 Login();
             }
         }
+        #endregion
 
+        #region "Private methods"      
         /// <summary>
         /// Logins this user.
         /// </summary>
@@ -197,9 +199,6 @@ namespace GS.Auth0
             }
         }
 
-        #endregion
-
-        #region "Private methods"        
         /// <summary>
         /// Gets the current user.
         /// </summary>

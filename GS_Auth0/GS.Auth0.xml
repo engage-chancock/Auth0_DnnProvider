@@ -234,11 +234,13 @@
             <param name="isDiagnosticModeEnabled">Enable that flag to create logs with info about what this method do</param>
             <returns></returns>
         </member>
-        <member name="M:GS.Auth0.Components.UserController.User_Update(DotNetNuke.Entities.Users.UserInfo,System.String,System.String,System.Int32,System.Boolean)">
+        <member name="M:GS.Auth0.Components.UserController.User_Update(DotNetNuke.Entities.Users.UserInfo,System.String,System.String,System.String,System.String,System.Int32,System.Boolean)">
             <summary>
             Update the DNN user profile
             </summary>
-            <param name="dnnUser"></param> 
+            <param name="dnnUser"></param>
+            /// <param name="firstName"></param>
+            /// <param name="lastName"></param>
             <param name="displayName"></param>
             <param name="emailAddress"></param>
             <param name="portalID"></param>
