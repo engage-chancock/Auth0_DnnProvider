@@ -87,6 +87,18 @@ namespace GS.Auth0.Components
 
                 if (string.IsNullOrEmpty(dnnUser.DisplayName))
                     dnnUser.DisplayName = dnnUser.Username;
+                else
+                {
+                    //if Auth0 just gives you a name with a first and last name inside, split them up and assign them to the DNN user
+                    var splitName = dnnUser.DisplayName.Split(' ');
+                    if (splitName.Length >= 2)
+                    {
+                        if (string.IsNullOrEmpty(dnnUser.FirstName))
+                            dnnUser.FirstName = splitName[0];
+                        if (string.IsNullOrEmpty(dnnUser.LastName))
+                            dnnUser.LastName = splitName[1];
+                    }
+                }
 
                 if (string.IsNullOrEmpty(dnnUser.FirstName))
                     dnnUser.FirstName = dnnUser.DisplayName;

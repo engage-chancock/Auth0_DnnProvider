@@ -187,7 +187,7 @@ namespace GS.Auth0
                                 _userInfo,
                                 context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.GivenName)?.Value,
                                 context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value,
-                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == "nickname")?.Value,
+                                context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == "name")?.Value,
                                 context.AuthenticationTicket.Identity?.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
                                 _portalSettings.PortalId,
                                 _providerConfig.IsDiagnosticModeEnabled);
