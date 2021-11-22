@@ -11,7 +11,7 @@
         <email>support@glanton.com</email>
       </owner>
       <license src="License.txt"></license>
-      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <releaseNotes src="ReleaseNotes.htm"/>
       <azureCompatible>true</azureCompatible>
       <dependencies>
         <dependency type="CoreVersion">08.00.01</dependency>

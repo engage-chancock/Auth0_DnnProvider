@@ -80,7 +80,7 @@ namespace GS.Auth0
                 exportUsersResult.Text = "Invalid token";
                 return;
             }
-
+            exportUsersResult.Text = "Export In Progress";
             var exporter = new DnnUserExporter();
             var resultString = exporter.ExportUsers(PortalId, exportUsersToken.Text);
             exportUsersResult.Text = resultString;

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using DotNetNuke.Services.Log.EventLog;
+using System.Threading;
 
 namespace GS.Auth0.Components
 {
@@ -46,12 +47,13 @@ namespace GS.Auth0.Components
         {
             var givenName = user.FirstName ?? "GivenName";
             var familyName = user.LastName ?? "FamilyName";
+            var fullName = user.FirstName == null && user.LastName == null ? $"{givenName} {familyName}" : $"{user.FirstName} {user.LastName}";
             var auth0User = new
             {
                 connection = "Username-Password-Authentication",
                 email = user.Email,
                 nickname = user.DisplayName,
-                name = $"{givenName} {familyName}",
+                name = fullName,
                 given_name = givenName,
                 family_name = familyName,
                 email_verified = true,
@@ -60,7 +62,8 @@ namespace GS.Auth0.Components
                 user_id = $"{user.UserID}",
             };
             var userJson = JsonConvert.SerializeObject(auth0User);
-            //await Task.Delay(1000);
+            //Management API requests are rate limited to 2 per second at most, so wait between each request
+            Thread.Sleep(550);
             var request = new HttpRequestMessage(HttpMethod.Post, $"https://{baseUrl}/api/v2/users");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
             request.Content = new StringContent(userJson, Encoding.UTF8, "application/json");

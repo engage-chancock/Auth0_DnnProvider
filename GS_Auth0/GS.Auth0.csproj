@@ -272,7 +272,7 @@
     <None Include="GS.Auth0.dnn" />
     <None Include="module.css" />
     <None Include="packages.config" />
-    <None Include="ReleaseNotes.txt" />
+    <Content Include="ReleaseNotes.htm" />
     <None Include="License.txt" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">

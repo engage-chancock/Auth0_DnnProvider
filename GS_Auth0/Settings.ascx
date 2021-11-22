@@ -6,7 +6,7 @@
     editmode="Edit"
     SortMode="SortOrderAttribute"
     />
-<span><%= Localization.GetString("ExportToken", this.LocalResourceFile) %></span>
+<span style="padding-left:4rem;" id="exportUsersLabel"><%= Localization.GetString("ExportToken", this.LocalResourceFile) %></span>
 <asp:TextBox runat="server" ID="exportUsersToken" ></asp:TextBox>
 <asp:Button runat="server" ID="exportUsersButton" OnClick="exportUsersButton_Click" Text="Export DNN Users" ></asp:Button>
 <asp:Label runat="server" id="exportUsersResult" Text=""/>
