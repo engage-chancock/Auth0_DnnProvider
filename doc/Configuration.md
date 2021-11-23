@@ -45,7 +45,8 @@ Since this process takes some time, you may see an HTTP Timeout error depending 
 ### Defaulting new user DNN user usernames to Auth0 usernames
 By default, when authenticating through Auth0, this module will look through the DNN users for a user with the same username as your Auth0 userId. This can be problematic
  if you already have DNN users and want them to be able to seamlessly login through Auth0 and keep their old DNN account when they log in. In order to mitigate this problem, you can create a rule in your Auth0 dashboard to send the Auth0 `preferred_username` which the module will then automatically use instead of the `user_id` for DNN user creation. In order to do so, go to your **Auth Pipeline -> Rules** section of Auth0. Click the `create` button to create a new rule and choose `Empty Rule`. Then paste the following code in the script box:
-```function (user, context, callback) {
+```
+function (user, context, callback) {
 			  user.preferred_username = user.username; //map username to OIDC standard claim
 			  return callback(null, user, context);
 			}
