@@ -12,6 +12,8 @@ The "Auth0 Connector" is a provider for DNN Platform that uses [Auth0 platform](
 * [Configuration](doc/Configuration.md)
     * [Configuration on the Auth0 platform](doc/Configuration.md#configuration-at-the-auth0-platform)
     * [Configuration on the DNN website](doc/Configuration.md#configuration-on-the-dnn-website)
+    * [Exporting Your Users From DNN To Auth0](doc/Configuration.md#exporting-your-users-from-dnn-to-auth0)
+    * [Configuring new DNN usernames to default to Auth0 usernames](doc/Configuration.md#defaulting-new-user-dnn-user-usernames-to-auth0-usernames)
 * [Login flow](doc/LoginFlow.md)
 * [Author](doc/Author.md)
 * [License](doc/License.md)
