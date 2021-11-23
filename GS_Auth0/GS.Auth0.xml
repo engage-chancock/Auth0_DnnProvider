@@ -184,12 +184,14 @@
             Class DnnUserExporter.
             </summary>
         </member>
-        <member name="M:GS.Auth0.Components.DnnUserExporter.ExportUsers(System.Int32,System.String)">
+        <member name="M:GS.Auth0.Components.DnnUserExporter.ExportUsers(System.Int32,System.String,System.Int32@,System.Int32@)">
             <summary>
             Exports users from DNN to Auth0
             </summary>
             <param name="portalId"></param>
             <param name="authToken"></param>
+            <param name="successCount"></param>
+            <param name="userCount"></param>
             <returns></returns>
         </member>
         <member name="M:GS.Auth0.Components.DnnUserExporter.CreateAuth0User(System.Net.Http.HttpClient,System.String,System.String,DotNetNuke.Entities.Users.UserInfo)">
@@ -202,9 +204,9 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:GS.Auth0.Components.DnnUserExporter.GetStatusString(System.Int32,System.Int32)">
+        <member name="M:GS.Auth0.Components.DnnUserExporter.GetStatus(System.Int32,System.Int32)">
             <summary>
-            Gets the status string.
+            Gets the status.
             </summary>
             <param name="successCount">The success count.</param>
             <param name="userCount">The user count.</param>
@@ -368,6 +370,15 @@
             Implements the <see cref="T:DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
             </summary>
             <seealso cref="T:DotNetNuke.Services.Authentication.AuthenticationSettingsBase" />
+        </member>
+        <member name="F:GS.Auth0.Settings.ExportUsersLabel">
+            <summary>
+            ExportUsersLabel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
         </member>
         <member name="F:GS.Auth0.Settings.exportUsersToken">
             <summary>

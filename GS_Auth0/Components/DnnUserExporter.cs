@@ -8,9 +8,17 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using DotNetNuke.Services.Log.EventLog;
 using System.Threading;
+using DotNetNuke.Services.Localization;
 
 namespace GS.Auth0.Components
 {
+    public enum UserExportStatus
+    { 
+        Success = 0,
+        Mixed = 1,
+        Failure = 2,
+    }
+
     /// <summary>
     /// Class DnnUserExporter.
     /// </summary>
@@ -21,18 +29,21 @@ namespace GS.Auth0.Components
         /// </summary>
         /// <param name="portalId"></param>
         /// <param name="authToken"></param>
+        /// <param name="successCount"></param>
+        /// <param name="userCount"></param>
         /// <returns></returns>
-        public string ExportUsers(int portalId, string authToken)
+        public UserExportStatus ExportUsers(int portalId, string authToken, out int successCount, out int userCount)
         {
             var client = new HttpClient();
             var providerConfig = Auth0ConfigBase.GetConfig(Constants.PROVIDER_NAME, portalId);
             var usersInfo = DotNetNuke.Entities.Users.UserController.GetUsers(portalId).Cast<UserInfo>().ToList();
-            var successAmount = 0;
+            successCount = 0;
             foreach (var user in usersInfo)
             {
-                successAmount += CreateAuth0User(client, providerConfig.Domain, authToken, user);
+                successCount += CreateAuth0User(client, providerConfig.Domain, authToken, user);
             }
-            return GetStatusString(successAmount, usersInfo.Count);
+            userCount = usersInfo.Count;
+            return GetStatus(successCount, userCount);
         }
 
         /// <summary>
@@ -57,7 +68,7 @@ namespace GS.Auth0.Components
                 given_name = givenName,
                 family_name = familyName,
                 email_verified = true,
-                password = Guid.NewGuid().ToString()+"aB1!", //temp password that should fit most specs
+                password = DotNetNuke.Entities.Users.UserController.GeneratePassword(13) + "aB1!", //temp password that should fit most specs
                 username = user.Username,
                 user_id = $"{user.UserID}",
             };
@@ -74,26 +85,22 @@ namespace GS.Auth0.Components
         }
 
         /// <summary>
-        /// Gets the status string.
+        /// Gets the status.
         /// </summary>
         /// <param name="successCount">The success count.</param>
         /// <param name="userCount">The user count.</param>
         /// <returns>System.String.</returns>
-        private string GetStatusString(int successCount, int userCount)
+        private UserExportStatus GetStatus(int successCount, int userCount)
         {
             if (successCount == userCount)
             {
-                return "Export Succeeded!";
+                return UserExportStatus.Success;
             }
             if (successCount > 0 && successCount < userCount)
             {
-                return $"{successCount}/{userCount} Exports Succeeded";
+                return UserExportStatus.Mixed;
             }
-            if (successCount == 0)
-            {
-                return "Export Failed!";
-            }
-            return string.Empty;
+            return UserExportStatus.Failure;
         }
 
     }

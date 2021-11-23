@@ -20,6 +20,7 @@ using DotNetNuke.UI.WebControls;
 using GS.Auth0.Components;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using DotNetNuke.Services.Localization;
 
 namespace GS.Auth0
 {
@@ -82,8 +83,20 @@ namespace GS.Auth0
             }
             exportUsersResult.Text = "Export In Progress";
             var exporter = new DnnUserExporter();
-            var resultString = exporter.ExportUsers(PortalId, exportUsersToken.Text);
-            exportUsersResult.Text = resultString;
+            var result = exporter.ExportUsers(PortalId, exportUsersToken.Text, out int successCount, out int userCount);
+            switch (result)
+            {
+                case (UserExportStatus.Success):
+                    exportUsersResult.Text = Localization.GetString("ExportUsersFeedback.Success", LocalResourceFile);
+                    break;
+                case (UserExportStatus.Mixed):
+                    var localizedStr = Localization.GetString("ExportUsersFeedback.Mixed", LocalResourceFile);
+                    exportUsersResult.Text = string.Format(localizedStr, successCount, userCount);
+                    break;
+                case (UserExportStatus.Failure):
+                    exportUsersResult.Text = Localization.GetString("ExportUsersFeedback.Failure", LocalResourceFile);
+                    break;
+            }
         }
     }
 

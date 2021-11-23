@@ -180,10 +180,19 @@
   <data name="ExportButton.Text" xml:space="preserve">
     <value>Export DNN Users</value>
   </data>
-  <data name="ExportToken.Help" xml:space="preserve">
+  <data name="ExportUsersFeedback.Failure" xml:space="preserve">
+    <value>Export Failed!</value>
+  </data>
+  <data name="ExportUsersFeedback.Mixed" xml:space="preserve">
+    <value>{0}/{1} Exports Succeeded</value>
+  </data>
+  <data name="ExportUsersFeedback.Success" xml:space="preserve">
+    <value>Export Succeeded!</value>
+  </data>
+  <data name="ExportUsersLabel.Help" xml:space="preserve">
     <value>Paste API token here from Auth0 Management API</value>
   </data>
-  <data name="ExportToken.Text" xml:space="preserve">
+  <data name="ExportUsersLabel.Text" xml:space="preserve">
     <value>User Export Token</value>
   </data>
   <data name="Title.Text" xml:space="preserve">
