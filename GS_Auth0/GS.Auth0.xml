@@ -179,22 +179,29 @@
             Name of the query string key that contains error message
             </summary>
         </member>
+        <member name="T:GS.Auth0.Components.UserExportStatus">
+            <summary>
+            Enum UserExportStatus
+            </summary>
+        </member>
         <member name="T:GS.Auth0.Components.DnnUserExporter">
             <summary>
             Class DnnUserExporter.
             </summary>
         </member>
-        <member name="M:GS.Auth0.Components.DnnUserExporter.ExportUsers(System.Int32,System.String,System.Int32@,System.Int32@)">
+        <member name="M:GS.Auth0.Components.DnnUserExporter.ExportUsers(System.Int32,System.String,System.String,System.Boolean,System.Int32@,System.Int32@)">
             <summary>
             Exports users from DNN to Auth0
             </summary>
             <param name="portalId"></param>
             <param name="authToken"></param>
+            <param name="domain"></param>
+            <param name="isDiagnosticModeEnabled"></param>
             <param name="successCount"></param>
             <param name="userCount"></param>
             <returns></returns>
         </member>
-        <member name="M:GS.Auth0.Components.DnnUserExporter.CreateAuth0User(System.Net.Http.HttpClient,System.String,System.String,DotNetNuke.Entities.Users.UserInfo)">
+        <member name="M:GS.Auth0.Components.DnnUserExporter.CreateAuth0User(System.Net.Http.HttpClient,System.String,System.String,DotNetNuke.Entities.Users.UserInfo,System.Boolean)">
             <summary>
             Creates an Auth0 user
             </summary>
@@ -202,6 +209,7 @@
             <param name="baseUrl"></param>
             <param name="authToken"></param>
             <param name="user"></param>
+            <param name="isDiagnosticModeEnabled"></param>
             <returns></returns>
         </member>
         <member name="M:GS.Auth0.Components.DnnUserExporter.GetStatus(System.Int32,System.Int32)">

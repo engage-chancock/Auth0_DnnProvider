@@ -9,9 +9,13 @@ using Newtonsoft.Json;
 using DotNetNuke.Services.Log.EventLog;
 using System.Threading;
 using DotNetNuke.Services.Localization;
+using DotNetNuke.Instrumentation;
 
 namespace GS.Auth0.Components
 {
+    /// <summary>
+    /// Enum UserExportStatus
+    /// </summary>
     public enum UserExportStatus
     { 
         Success = 0,
@@ -24,18 +28,21 @@ namespace GS.Auth0.Components
     /// </summary>
     public class DnnUserExporter
     {
+        private static readonly ILog logger = LoggerSource.Instance.GetLogger(typeof(DnnUserExporter));
+
         /// <summary>
         /// Exports users from DNN to Auth0
         /// </summary>
         /// <param name="portalId"></param>
         /// <param name="authToken"></param>
+        /// <param name="domain"></param>
+        /// <param name="isDiagnosticModeEnabled"></param>
         /// <param name="successCount"></param>
         /// <param name="userCount"></param>
         /// <returns></returns>
-        public UserExportStatus ExportUsers(int portalId, string authToken, out int successCount, out int userCount)
+        public UserExportStatus ExportUsers(int portalId, string authToken, string domain, bool isDiagnosticModeEnabled, out int successCount, out int userCount)
         {
             var client = new HttpClient();
-            var providerConfig = Auth0ConfigBase.GetConfig(Constants.PROVIDER_NAME, portalId);
             var usersInfo = DotNetNuke.Entities.Users.UserController.GetUsers(portalId).Cast<UserInfo>().ToList();
             //super users aren't included in original collection, so need to get those separately and add in
             var superUserInfo = DotNetNuke.Entities.Users.UserController.GetUsers(false, true, DotNetNuke.Common.Utilities.Null.NullInteger).Cast<UserInfo>().ToList();
@@ -43,9 +50,11 @@ namespace GS.Auth0.Components
             successCount = 0;
             foreach (var user in usersInfo)
             {
-                successCount += CreateAuth0User(client, providerConfig.Domain, authToken, user);
+                successCount += CreateAuth0User(client, domain, authToken, user, isDiagnosticModeEnabled);
             }
             userCount = usersInfo.Count;
+            if (isDiagnosticModeEnabled)
+                logger.Debug(string.Format("{0}/{1} Auth0 users exported successfully", successCount, userCount));
             return GetStatus(successCount, userCount);
         }
 
@@ -56,8 +65,9 @@ namespace GS.Auth0.Components
         /// <param name="baseUrl"></param>
         /// <param name="authToken"></param>
         /// <param name="user"></param>
+        /// <param name="isDiagnosticModeEnabled"></param>
         /// <returns></returns>
-        private int CreateAuth0User(HttpClient client, string baseUrl, string authToken, UserInfo user)
+        private int CreateAuth0User(HttpClient client, string baseUrl, string authToken, UserInfo user, bool isDiagnosticModeEnabled)
         {
             var givenName = user.FirstName ?? "GivenName";
             var familyName = user.LastName ?? "FamilyName";
@@ -84,6 +94,8 @@ namespace GS.Auth0.Components
             var task = Task.Run(() => client.SendAsync(request));
             task.Wait();
             var response = task.Result;
+            if (isDiagnosticModeEnabled)
+                logger.Debug(string.Format("User '{0}' creation in Auth0 success?: {1}", user.Username, response.IsSuccessStatusCode));
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 

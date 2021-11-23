@@ -83,7 +83,8 @@ namespace GS.Auth0
             }
             exportUsersResult.Text = "Export In Progress";
             var exporter = new DnnUserExporter();
-            var result = exporter.ExportUsers(PortalId, exportUsersToken.Text, out int successCount, out int userCount);
+            var config = (Auth0ConfigBase)SettingsEditor.DataSource;
+            var result = exporter.ExportUsers(PortalId, exportUsersToken.Text, config.Domain, config.IsDiagnosticModeEnabled, out int successCount, out int userCount);
             switch (result)
             {
                 case (UserExportStatus.Success):
