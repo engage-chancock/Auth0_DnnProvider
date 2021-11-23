@@ -37,6 +37,9 @@ namespace GS.Auth0.Components
             var client = new HttpClient();
             var providerConfig = Auth0ConfigBase.GetConfig(Constants.PROVIDER_NAME, portalId);
             var usersInfo = DotNetNuke.Entities.Users.UserController.GetUsers(portalId).Cast<UserInfo>().ToList();
+            //super users aren't included in original collection, so need to get those separately and add in
+            var superUserInfo = DotNetNuke.Entities.Users.UserController.GetUsers(false, true, DotNetNuke.Common.Utilities.Null.NullInteger).Cast<UserInfo>().ToList();
+            usersInfo.AddRange(superUserInfo);
             successCount = 0;
             foreach (var user in usersInfo)
             {
