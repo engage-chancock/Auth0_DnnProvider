@@ -3,6 +3,7 @@ using DotNetNuke.Instrumentation;
 using GS.Auth0.Components;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -47,6 +48,7 @@ namespace GS.Auth0
 
                 // Enable the Cookie saver middleware to work around a bug in the OWIN implementation
                 app.UseKentorOwinCookieSaver();
+                //var CookieManager = new SystemWebCookieManager();
 
                 // Set Cookies as default authentication type
                 app.SetDefaultSignInAsAuthenticationType(Constants.AUTH_TYPE);
@@ -54,6 +56,7 @@ namespace GS.Auth0
                 {
                     AuthenticationType = Constants.AUTH_TYPE,
                     CookieName = Constants.AUTH_COOKIE_NAME,
+                    //CookieManager = CookieManager,
                 });
 
 
@@ -65,6 +68,7 @@ namespace GS.Auth0
                     ClientId = auth0ClientId,
                     Scope = "openid profile email",
                     ResponseType = OpenIdConnectResponseType.CodeIdToken,
+                    //CookieManager = CookieManager,
 
                     TokenValidationParameters = new TokenValidationParameters
                     {
