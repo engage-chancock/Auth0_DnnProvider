@@ -82,7 +82,7 @@ namespace GS.Auth0.Components
                 family_name = familyName,
                 email_verified = true,
                 password = DotNetNuke.Entities.Users.UserController.GeneratePassword(13) + "aB1!", //temp password that should fit most specs
-                username = user.Username,
+                username = user.Username.Trim(), //trim leading and trailing white spaces because Auth0 does not allow spaces in usernames
                 user_id = $"{user.UserID}",
             };
             var userJson = JsonConvert.SerializeObject(auth0User);
