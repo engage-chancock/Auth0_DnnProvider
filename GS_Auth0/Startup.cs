@@ -56,6 +56,8 @@ namespace GS.Auth0
                 {
                     AuthenticationType = Constants.AUTH_TYPE,
                     CookieName = Constants.AUTH_COOKIE_NAME,
+                    CookieSameSite = Microsoft.Owin.SameSiteMode.None,
+                    CookieSecure = CookieSecureOption.Always
                     //CookieManager = CookieManager,
                 });
 
@@ -174,6 +176,11 @@ namespace GS.Auth0
                             else
                                 throw new ArgumentNullException("Can't obtain DNN settings, login process terminated!!");
                             #endregion
+
+                            if (_providerConfig != null && _providerConfig.IsDiagnosticModeEnabled)
+                            {
+                                logger.Debug("Received authorization code from Auth0.");
+                            }
 
                             GS.Auth0.Components.UserController userController = new GS.Auth0.Components.UserController();
 
