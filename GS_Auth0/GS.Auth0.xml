@@ -101,6 +101,11 @@
             Skips login page and instead logs in immediately
             </summary>
         </member>
+        <member name="P:GS.Auth0.Components.Auth0ConfigBase.AutoRetryOnFailure">
+            <summary>
+            Whether or not to automatically retry to login if there is a owin cookie related failure
+            </summary>
+        </member>
         <member name="P:GS.Auth0.Components.Auth0ConfigBase.AreProviderSettingsCorrect">
             <summary>
             Check if provider has defined all coordinates that are necessary to initialize login flow.

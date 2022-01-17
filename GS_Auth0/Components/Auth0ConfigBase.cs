@@ -36,6 +36,7 @@ namespace GS.Auth0.Components
             IsEnabled = PortalController.GetPortalSettingAsBoolean(Service + "_Enabled", portalId, false);
             IsDiagnosticModeEnabled = PortalController.GetPortalSettingAsBoolean(Service + "_IsDiagnosticModeEnabled", portalId, true);
             SkipLoginPage = PortalController.GetPortalSettingAsBoolean(Service + "_SkipLoginPage", portalId, false);
+            AutoRetryOnFailure = PortalController.GetPortalSettingAsBoolean(Service + "_AutoRetryOnFailure", portalId, false);
         }
         #endregion
 
@@ -104,6 +105,12 @@ namespace GS.Auth0.Components
         public bool SkipLoginPage { get; set; }
 
         /// <summary>
+        /// Whether or not to automatically retry to login if there is a owin cookie related failure
+        /// </summary>
+        [DotNetNuke.UI.WebControls.SortOrder(8)]
+        public bool AutoRetryOnFailure { get; set; }
+
+        /// <summary>
         /// Check if provider has defined all coordinates that are necessary to initialize login flow.
         /// </summary>
         [System.ComponentModel.Browsable(false)]
@@ -167,6 +174,7 @@ namespace GS.Auth0.Components
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_Enabled", config.IsEnabled.ToString(CultureInfo.InvariantCulture));
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_IsDiagnosticModeEnabled", config.IsDiagnosticModeEnabled.ToString(CultureInfo.InvariantCulture));
             PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_SkipLoginPage", config.SkipLoginPage.ToString(CultureInfo.InvariantCulture));
+            PortalController.UpdatePortalSetting(config.PortalID, config.Service + "_AutoRetryOnFailure", config.AutoRetryOnFailure.ToString(CultureInfo.InvariantCulture));
 
 
             ClearConfig(config.Service, config.PortalID);

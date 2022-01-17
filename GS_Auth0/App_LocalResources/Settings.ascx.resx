@@ -120,6 +120,12 @@
   <data name="AdminHelp.Text" xml:space="preserve">
     <value>h1</value>
   </data>
+  <data name="Auth0ConfigBase_AutoRetryOnFailure.Help" xml:space="preserve">
+    <value>If you'd like for the authentication system to automatically retry a login if it fails specifically due to a common "OpenIdConnectProtocolValidationContext.Nonce was null" problem when saving cookies.</value>
+  </data>
+  <data name="Auth0ConfigBase_AutoRetryOnFailure.Text" xml:space="preserve">
+    <value>Automatically Retry Login On Failure</value>
+  </data>
   <data name="Auth0ConfigBase_ClientID.Help" xml:space="preserve">
     <value>Unique identifier of your Auth0 application</value>
   </data>
@@ -190,7 +196,7 @@
     <value>Export Succeeded!</value>
   </data>
   <data name="ExportUsersLabel.Help" xml:space="preserve">
-    <value>Paste API token here from Auth0 Management API</value>
+    <value>Paste API token here from Auth0 Management API.</value>
   </data>
   <data name="ExportUsersLabel.Text" xml:space="preserve">
     <value>User Export Token</value>

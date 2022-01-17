@@ -219,16 +219,17 @@ namespace GS.Auth0
                             await Task.FromResult(0);
                         },
 
-                        AuthenticationFailed = (context) =>
+                        AuthenticationFailed = async context =>
                         {
                             //get the error message and send it to the DNN login page
                             DotNetNuke.Entities.Portals.PortalSettings _portalSettings = null;
+                            System.Web.HttpContextWrapper _context = null;
 
                             #region "Get settings from current DNN portal"                            
                             if (context.OwinContext.Environment["System.Web.HttpContextBase"] != null
                             && context.OwinContext.Environment["System.Web.HttpContextBase"] is System.Web.HttpContextWrapper)
                             {
-                                System.Web.HttpContextWrapper _context = context.OwinContext.Environment["System.Web.HttpContextBase"] as System.Web.HttpContextWrapper;
+                                _context = context.OwinContext.Environment["System.Web.HttpContextBase"] as System.Web.HttpContextWrapper;
                                 if (_context.Items["PortalSettings"] != null
                                 && _context.Items["PortalSettings"] is DotNetNuke.Entities.Portals.PortalSettings)
                                 {
@@ -248,10 +249,19 @@ namespace GS.Auth0
                             if (_providerConfig.IsDiagnosticModeEnabled)
                                 logger.Error(string.Format("OIDC authentication failed, details: {0}", context.Exception));
 
-                            string redirectUrl = DotNetNuke.Common.Globals.NavigateURL(_portalSettings.LoginTabId, "Login", new string[] { Constants.ALERT_QUERY_STRING + "=" + context.Exception.Message });
-                            context.Response.Redirect(redirectUrl);
-                            context.HandleResponse();
-                            return Task.FromResult(0);
+                            if (_providerConfig.AutoRetryOnFailure && context.Exception.Message.Contains("IDX21323") && _context != null)
+                            {
+                                var returnUri = _context.Request.QueryString[Constants.OIDC_RETURN_URL] != null ? _context.Request.QueryString[Constants.OIDC_RETURN_URL] : "/";
+                                context.HandleResponse();
+                                context.OwinContext.Authentication.Challenge(new Microsoft.Owin.Security.AuthenticationProperties { RedirectUri = returnUri }, Constants.AUTH_TYPE);
+                            }
+                            else
+                            {
+                                string redirectUrl = DotNetNuke.Common.Globals.NavigateURL(_portalSettings.LoginTabId, "Login", new string[] { Constants.ALERT_QUERY_STRING + "=" + context.Exception.Message });
+                                context.Response.Redirect(redirectUrl);
+                                context.HandleResponse();
+                            }
+                            await Task.FromResult(0);
                         },
 
                         #region "Rest of 'Notification' methods, not in use for now."

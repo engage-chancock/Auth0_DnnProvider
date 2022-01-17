@@ -1,42 +1,49 @@
 ﻿<div class="Owner">
-		<h3>Auth0 Connector - Change Log</h3>
-		
-		<h4>Requirements</h4>
-		<ul>
+	<h3>Auth0 Connector - Change Log</h3>
+
+	<h4>Requirements</h4>
+	<ul>
 		<li>DotNetNuke v9.1.1 or above</li>
 		<li>.NET Framework v4.7.2 or above</li>
-		</ul>
+	</ul>
 
-		<p>Azure AD Connector uses OWIN pipeline. Please make sure that you backed up the DNN file system and DNN database.</p>
-		
-		<h4>Documentation/Setup</h4>
-		<ul>
+	<p>Azure AD Connector uses OWIN pipeline. Please make sure that you backed up the DNN file system and DNN database.</p>
+
+	<h4>Documentation/Setup</h4>
+	<ul>
 		<li>Toggle enable provider in site settings to allow this module to work as an authentication provider</li>
 		<li>Get your Domain, Client ID, and Client Secret from the Auth0 dashboard in Application->Settings and enter them into their respective boxes in the site settings.</li>
 		<li>While in Application->Settings in the Auth0 dashboard set the Login and Callback URLs and use those same URLs in their respective boxes in the site settings.</li>
 		<li>Toggle 'Enable diagnostic mode' in the module site settings if you wish to allow logging.</li>
 		<li>Toggle 'Bypass DNN Login Page' if you would like clicks on the 'Login' button to log in directly instead of going to the DNN login page.</li>
-		<li>If you wish to export your current DNN users to Auth0, such as during your initial setup, you can use the 'Export DNN Users' button. To do so you will need
-			to go to the Auth0 dashboard and make sure you have a Machine To Machine application created in the Applications tab. Then go to the Applications->APIs tab and 
+		<li>
+			If you wish to export your current DNN users to Auth0, such as during your initial setup, you can use the 'Export DNN Users' button. To do so you will need
+			to go to the Auth0 dashboard and make sure you have a Machine To Machine application created in the Applications tab. Then go to the Applications->APIs tab and
 			create an API if you do not currently have one. In the 'Machine To Machine Applications' tab of your API make sure your Machine To Machine application is enabled.
 			Likewise, make sure the API is enabled in the Machine To Machine Application setting's APIs tab. Now go the API's API Explorer tab and generate a token if you don't
 			have one enabled. Make sure to keep your expiration time low for the token for security purposes. Now copy your token and paste it into the 'User Export Token'
 			box in the module site settings and click the 'Export DNN Users' button. There will be text on the right of the button explaining whether the export is still in progress
 			or the results of the export once it is complete. Be patient as it may take some time depending on the number of users you have in DNN. If you get an http timeout error you
-			may need to increase the httpRuntime executionTimeout time in the web config in order for the process to complete correctly. </li>
-		<li>By default, when authenticating through Auth0, this module will look through the DNN users for a user with the same username as your Auth0 userId. This can be problematic
+			may need to increase the httpRuntime executionTimeout time in the web config in order for the process to complete correctly.
+		</li>
+		<li>
+			By default, when authenticating through Auth0, this module will look through the DNN users for a user with the same username as your Auth0 userId. This can be problematic
 			if you already have DNN users and want them to be able to seamlessly login through Auth0 and keep their DNN account with their first login. In order to mitigate this problem,
 			you can create a rule in your Auth0 dashboard to send the preferred_username instead of the user id. In order to do so, go to your Auth Pipeline -> Rules section of Auth0.
 			Click the create button to create a new rule and choose 'Empty Rule'. Then paste the following code in the script box: "function (user, context, callback) {
-			  user.preferred_username = user.username; //map username to OIDC standard claim
-			  return callback(null, user, context);
-			}" Save changes for the rule and you should be able to login to DNN afterwards with Auth0 authentication without the module creating a new DNN account on your first login.</li>
-		</ul>
-		<h4>1.0.0 (August 30, 2019)</h4>
-		<p>[+] initial version</p>
+			user.preferred_username = user.username; //map username to OIDC standard claim
+			return callback(null, user, context);
+			}" Save changes for the rule and you should be able to login to DNN afterwards with Auth0 authentication without the module creating a new DNN account on your first login.
+		</li>
+	</ul>
+	<h4>1.0.0 (August 30, 2019)</h4>
+	<p>[+] initial version</p>
 
-		<h4>1.0.3 (November 19, 2021)</h4>
-		<p>[+] Add setting to bypass default DNN login page</p>
-		<p>[+] Newly created DNN users can have Auth0 username instead of ID as username</p>
-		<p>[+] Add button in settings to export DNN users to Auth0 </p>
+	<h4>1.0.3 (November 19, 2021)</h4>
+	<p>[+] Add setting to bypass default DNN login page</p>
+	<p>[+] Newly created DNN users can have Auth0 username instead of ID as username</p>
+	<p>[+] Add button in settings to export DNN users to Auth0 </p>
+
+	<h4>1.0.4 (January 17, 2022)</h4>
+	<p>[+] Add setting to automatically retry login if login fails due to a cookie related problem with Owin </p>
 </div>
