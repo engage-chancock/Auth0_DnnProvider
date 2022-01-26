@@ -249,9 +249,12 @@ namespace GS.Auth0
                             if (_providerConfig.IsDiagnosticModeEnabled)
                                 logger.Error(string.Format("OIDC authentication failed, details: {0}", context.Exception));
 
-                            if (_providerConfig.AutoRetryOnFailure && context.Exception.Message.Contains("IDX21323") && _context != null)
+                            if (_providerConfig.AutoRetryOnFailure && context.Exception.Message.Contains("IDX21323"))
                             {
-                                var returnUri = _context.Request.QueryString[Constants.OIDC_RETURN_URL] != null ? _context.Request.QueryString[Constants.OIDC_RETURN_URL] : "/";
+                                _context = context.OwinContext.Environment["System.Web.HttpContextBase"] as System.Web.HttpContextWrapper;
+                                var returnUri = _context?.Request?.QueryString[Constants.OIDC_RETURN_URL] != null
+                                    ? _context.Request.QueryString[Constants.OIDC_RETURN_URL]
+                                    : "/";
                                 context.HandleResponse();
                                 context.OwinContext.Authentication.Challenge(new Microsoft.Owin.Security.AuthenticationProperties { RedirectUri = returnUri }, Constants.AUTH_TYPE);
                             }
