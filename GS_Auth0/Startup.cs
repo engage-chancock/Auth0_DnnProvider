@@ -1,6 +1,5 @@
 ﻿using DotNetNuke.Entities.Portals;
 using DotNetNuke.Instrumentation;
-using DotNetNuke.Services.Social.Notifications;
 using GS.Auth0.Components;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -12,9 +11,11 @@ using Owin;
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json;
 
 [assembly: Microsoft.Owin.OwinStartupAttribute(Constants.PROVIDER_NAME, typeof(GS.Auth0.Startup))]
 
@@ -49,6 +50,7 @@ namespace GS.Auth0
                 
                 string auth0Domain = config.Domain;
                 string auth0ClientId = config.ClientID;
+                var httpClient = new HttpClient();
 
                 // Enable the Cookie saver middleware to work around a bug in the OWIN implementation
                 app.UseKentorOwinCookieSaver();
@@ -83,13 +85,13 @@ namespace GS.Auth0
 
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
-                        RedirectToIdentityProvider = notification =>
+                        RedirectToIdentityProvider = async notification =>
                         {
                             var providerConfig = GetProviderConfig(notification);
 
                             if (providerConfig != null && notification.ProtocolMessage.RequestType != OpenIdConnectRequestType.Logout)
                             {
-                                UpdateForCurrentPortal(notification, notification.ProtocolMessage, providerConfig, true);
+                                await UpdateForCurrentPortal(notification, notification.ProtocolMessage, providerConfig, true, httpClient);
                                 logger.Error($"Current metadata address is {notification.Options.MetadataAddress}");
                                 notification.HandleResponse();
                             }
@@ -119,8 +121,6 @@ namespace GS.Auth0
                                 logger.Debug("Redirect uri: " + notification.Options.RedirectUri);
                                 logger.Debug("Callback path: " + notification.Options.CallbackPath);
                             }
-
-                            return Task.FromResult(0);
                         },
 
                         AuthorizationCodeReceived = async notification =>
@@ -239,19 +239,6 @@ namespace GS.Auth0
                             await Task.FromResult(0);
                         },
 
-                        SecurityTokenReceived = notification =>
-                        {
-                            var providerConfig = GetProviderConfig(notification);
-
-                            if (providerConfig != null && notification.ProtocolMessage.RequestType != OpenIdConnectRequestType.Logout)
-                            {
-                                UpdateForCurrentPortal(notification, notification.ProtocolMessage, providerConfig, false);
-                            }
-
-                            logger.Error("Updated notification with updated config");
-                            return Task.FromResult(0);
-                        },
-
                         #region "Rest of 'Notification' methods, not in use for now."
                         //SecurityTokenValidated = notification =>
                         //{
@@ -294,7 +281,7 @@ namespace GS.Auth0
             throw new InvalidOperationException();
         }
 
-        private static void UpdateForCurrentPortal(BaseContext<OpenIdConnectAuthenticationOptions> notification, OpenIdConnectMessage protocolMessage, Auth0ConfigBase providerConfig, bool includeRedirect)
+        private static async Task UpdateForCurrentPortal(BaseContext<OpenIdConnectAuthenticationOptions> notification, OpenIdConnectMessage protocolMessage, Auth0ConfigBase providerConfig, bool includeRedirect, HttpClient httpClient)
         {
             notification.Options.Authority = $"https://{providerConfig.Domain}";
             notification.Options.ClientId = providerConfig.ClientID;
@@ -302,13 +289,17 @@ namespace GS.Auth0
             notification.Options.RedirectUri = providerConfig.RedirectUri;
             notification.Options.MetadataAddress = $"https://{providerConfig.Domain}/.well-known/openid-configuration";
 
+            var jwks = await httpClient.GetAsync($"https://{providerConfig.Domain}/.well-known/jwks.json");
+            var jsonString = await jwks.Content.ReadAsStringAsync();
+            var jsonKeyResponse = JsonConvert.DeserializeObject<JsonKeyResponse>(jsonString);
+            var jsonKey = JsonConvert.SerializeObject(jsonKeyResponse.keys.First());
             notification.Options.TokenValidationParameters = new TokenValidationParameters()
             {
                 NameClaimType = ClaimTypes.NameIdentifier,
-                ValidAudience = "https://authtest.local",
-                ValidIssuer = $"https://{providerConfig.Domain}",
+                ValidAudience = providerConfig.ClientID,
+                ValidIssuer = $"https://{providerConfig.Domain}/",
+                IssuerSigningKey = JsonWebKey.Create(jsonKey),
             };
-
 
             protocolMessage.ClientId = providerConfig.ClientID;
             protocolMessage.ClientSecret = providerConfig.ClientSecret;
@@ -318,7 +309,6 @@ namespace GS.Auth0
             if (includeRedirect)
             {
                 var redirectUri = protocolMessage.BuildRedirectUrl();
-                logger.Error($"redirect url built is {redirectUri}");
                 notification.Response.Redirect($"{redirectUri}");
             }
         }

@@ -227,6 +227,8 @@
     <Compile Include="Components\Constants.cs" />
     <Compile Include="Components\DnnUserExporter.cs" />
     <Compile Include="Components\Helpers.cs" />
+    <Compile Include="Components\JsonKey.cs" />
+    <Compile Include="Components\JsonKeyResponse.cs" />
     <Compile Include="Components\UserController.cs" />
     <Compile Include="LogIn.ascx.cs">
       <DependentUpon>LogIn.ascx</DependentUpon>
@@ -339,10 +341,4 @@
 rem copy $(ProjectDir)App_LocalResources\Settings.ascx.resx "C:\inetpub\wwwroot\Dnn803\DesktopModules\AuthenticationServices\GS_Auth0\App_LocalResources"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
-  </Target>
 </Project>
